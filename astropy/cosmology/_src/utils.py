@@ -12,6 +12,8 @@ import numpy as np
 
 from astropy.units import Quantity
 
+from astropy.cosmology._utils import deprecated_keywords
+
 # isort: split
 import astropy.cosmology._src.units as cu
 
