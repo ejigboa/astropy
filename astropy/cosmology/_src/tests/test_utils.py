@@ -4,6 +4,8 @@ import numpy as np
 import pytest
 
 import astropy.units as u
+from astropy.utils.decorators import deprecated_keywords
+
 from astropy.cosmology._src.utils import (
     all_cls_vars,
     aszarr,
