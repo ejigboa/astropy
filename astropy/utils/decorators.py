@@ -18,6 +18,28 @@ from .exceptions import (
     AstropyUserWarning,
 )
 
+
+def deprecated_keywords(*names, since):
+    # type checks
+    if any(not isinstance(n, str) for n in names):
+        raise TypeError("names[0] must be a string")
+    if not isinstance(since, str):
+        raise TypeError("since must be a string")
+
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            used = [n for n in names if n in kwargs]
+            if used:
+                if len(used) == 1:
+                    msg = f"Passing '{used[0]}' as keyword is deprecated since {since}"
+                else:
+                    msg = f"Passing {used} arguments as keywords is deprecated since {since}"
+                warnings.warn(msg, FutureWarning)
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
 __all__ = [
     "classproperty",
     "deprecated",
